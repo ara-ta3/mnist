@@ -25,7 +25,13 @@ class SoftmaxWithLoss:
 
     def backward(self, dout=1):
         batch_size = self.t.shape[0]
-        dx = (self.y - self.t) / batch_size
+        if self.t.size == self.y.size:
+            dx = (self.y - self.t) / batch_size
+        else:
+            dx = self.y.copy()
+            dx[np.arange(batch_size), self.t] -= 1
+            dx = dx / batch_size
+
         return dx
 
 
@@ -38,10 +44,6 @@ class Affine:
         self.db = None
 
     def forward(self, x):
-        print(self.W)
-        print(x.shape)
-        print(self.W.shape)
-        print(self.b.shape)
         self.x = x
         out = np.dot(x, self.W) + self.b
         return out

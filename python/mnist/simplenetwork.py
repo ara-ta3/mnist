@@ -1,7 +1,7 @@
 from collections import OrderedDict
 import numpy as np
 
-from mnist.functions import cross_entropy_error, numerical_gradient
+from mnist.functions import numerical_gradient
 from mnist.layers import Affine, SoftmaxWithLoss, Relu
 
 
@@ -35,7 +35,7 @@ class SimpleNetWork:
 
     def loss(self, x, t):
         y = self.predict(x)
-        return cross_entropy_error(y, t)
+        return self.lastLayer.forward(y, t)
 
     def accuracy(self, x, t):
         y = self.predict(x)
@@ -49,16 +49,16 @@ class SimpleNetWork:
         grads = {}
 
         grads['W1'] = numerical_gradient(
-            lambda x: self.loss(x, t), self.params['W1']
+            lambda xx: self.loss(x, t), self.params['W1']
         )
         grads['b1'] = numerical_gradient(
-            lambda x: self.loss(x, t), self.params['b1']
+            lambda xx: self.loss(x, t), self.params['b1']
         )
         grads['W2'] = numerical_gradient(
-            lambda x: self.loss(x, t), self.params['W2']
+            lambda xx: self.loss(x, t), self.params['W2']
         )
         grads['b2'] = numerical_gradient(
-            lambda x: self.loss(x, t), self.params['b2']
+            lambda xx: self.loss(x, t), self.params['b2']
         )
         return grads
 

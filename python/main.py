@@ -1,5 +1,7 @@
 import numpy as np
 
+import pickle
+
 from mnist.dataload import load_mnist
 from mnist.simplenetwork import SimpleNetWork
 
@@ -15,6 +17,9 @@ def main():
     grad_backprop = network.gradient(
         x_batch, t_batch
     )
+
+    with open('grad_numerical.pkl', mode='wb') as f:
+        pickle.dump(grad_numerical, f)
 
     for key in grad_numerical.keys():
         diff = np.average(
