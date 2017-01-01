@@ -5,10 +5,7 @@ from mnist.dataload import load_mnist
 from mnist.simplenetwork import SimpleNetWork
 
 
-def main():
-    (x_train, t_train), (x_test, t_test) = load_mnist(
-        normalize=True, one_hot_label=True
-    )
+def learn_network(x_train, t_train, x_test, t_test):
     network = SimpleNetWork(
         input_size=784, hidden_size=50, output_size=10
     )
@@ -20,7 +17,9 @@ def main():
     train_acc_list = []
     test_acc_list = []
     iter_per_epoch = max(train_size / batch_size, 1)
+    print(iters_num)
     for i in range(iters_num):
+        print(i)
         batch_mask = np.random.choice(train_size, batch_size)
         x_batch = x_train[batch_mask]
         t_batch = t_train[batch_mask]
@@ -43,6 +42,23 @@ def main():
 
     with open('network.pkl', mode='wb') as f:
         pickle.dump(network, f)
+
+    return network
+
+
+def main():
+    (x_train, t_train), (x_test, t_test) = load_mnist(
+        normalize=True, one_hot_label=True
+    )
+#     network = None
+#     with open('network.pkl', mode='rb') as f:
+#         network = pickle.load(f)
+    network = learn_network(
+        x_train, t_train, x_test, t_test
+    )
+
+    r = network.accuracy(x_train, t_train)
+    print(r)
 
 
 if __name__ == '__main__':
