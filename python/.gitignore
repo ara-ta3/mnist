@@ -1,5 +1,11 @@
+__pycache__
+*gz
+*pkl
+
 .Python
 bin
 include
 lib
 pip-selfcheck.json
+
+mnist/dataload.py
