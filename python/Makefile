@@ -7,14 +7,14 @@ install: bin/pip requirements.txt
 install-dev: bin/pip requirements.dev.txt install
 	$< install -r requirements.dev.txt
 
-virtualenv:
-	virtualenv -p python3 .
+pyvenv:
+	pyvenv .
 
 bin/pip:
-	$(MAKE) virtualenv
+	$(MAKE) pyvenv
 
 bin/python:
-	$(MAKE) virtualenv
+	$(MAKE) pyvenv
 
 mnist/dataload.py:
 	wget -O $@ https://raw.githubusercontent.com/oreilly-japan/deep-learning-from-scratch/master/dataset/mnist.py

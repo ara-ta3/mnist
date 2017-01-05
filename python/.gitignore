@@ -10,3 +10,4 @@ lib
 pip-selfcheck.json
 
 mnist/dataload.py
+pyvenv.cfg
